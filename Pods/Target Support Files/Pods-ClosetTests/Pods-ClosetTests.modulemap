@@ -1,0 +1,6 @@
+framework module Pods_ClosetTests {
+  umbrella header "Pods-ClosetTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
