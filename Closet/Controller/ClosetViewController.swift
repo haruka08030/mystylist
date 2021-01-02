@@ -35,8 +35,8 @@ class ClosetViewController: UIViewController, UICollectionViewDataSource, UIColl
     //セルに写真を表示させる
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as? ClosetCollectionViewCell
-        cell?.clotheImageView.image = loadImageFromDocumentDirectory(fileName: imageData)
-        return cell
+//        cell?.clotheImageView.image = loadImageFromDocumentDirectory(fileName: imageData)
+        return cell!
     }
     
     
@@ -45,8 +45,8 @@ class ClosetViewController: UIViewController, UICollectionViewDataSource, UIColl
         let documentsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!;
         let fileURL = documentsUrl.appendingPathComponent(fileName)
         do {
-            imageData = try Data(contentsOf: fileURL)
-            return UIImage(data: imageData)
+//            imageData = try Data(contentsOf: fileURL)
+//            return UIImage(data: imageData)
         } catch {}
         return nil
     }

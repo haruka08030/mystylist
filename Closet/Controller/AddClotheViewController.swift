@@ -22,6 +22,9 @@ class AddClotheViewController: UIViewController, UITextFieldDelegate, UITextView
     var nameTextFieldString = ""
     var memoTextViewString = ""
     var clotheImage: UIImage?
+    let date = Date()
+    let dateFormatter = DateFormatter()
+    var nowDate = String()
     
     
     override func viewDidLoad() {
@@ -102,16 +105,21 @@ class AddClotheViewController: UIViewController, UITextFieldDelegate, UITextView
             print("カメラボタンがタップされた")
         }
         
-        let actionAlbum = UIAlertAction(title: "アルバム", style: .destructive){
+        let actionAlbum = UIAlertAction(title: "アルバム", style: .default){
             action in
             print("アルバムボタンがタップされた")
             self.showAlbum()
         }
         
+        let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel){
+            action in
+            print("キャンセルボタンがタップされた")
+        }
         
         // actionを追加
         alertController.addAction(actionCamera)
         alertController.addAction(actionAlbum)
+        alertController.addAction(cancelAction)
         
         // UIAlertControllerの起動
         present(alertController, animated: true, completion: nil)
@@ -179,22 +187,36 @@ class AddClotheViewController: UIViewController, UITextFieldDelegate, UITextView
                 present(alertController, animated: true, completion: nil)
                 
         }else{
-            saveImageInDocumentDirectory(image: clotheImage!, fileName: "Clothe-\(Date())")
+            // 日付をフォーマット
+            dateFormatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "yyyy/MM/dd HH-mm-ss", options: 0, locale: Locale(identifier: "ja_jp"))
             
-            guard let nameText = clotheNameTextField.text else{
+            // 日付をStringに変換
+            nowDate = dateFormatter.string(from: date)
+            
+            // 「/」「 」「:」を全て「-」に置き換える
+            var replaceNowDate: String {
+                let dictionary = ["/": "-", " ": "-", ":": "-"]
+                return dictionary.reduce(nowDate,  { $0.replacingOccurrences(of: $1.key, with: $1.value) })
+            }
+            print(replaceNowDate)
+            
+            
+            saveImageInDocumentDirectory(image: clotheImage!, fileName: "Clothe-\(replaceNowDate)")
+            
+            guard let nameText = clotheNameTextField.text else {
             return
             }
-            guard let themeText = clotheThemeTextField.text else{
+            guard let themeText = clotheThemeTextField.text else {
             return
             }
             guard let colorText = clotheColorTextField.text else {
             return
             }
-            guard let memoText = clotheMemoTextView.text else{
+            guard let memoText = clotheMemoTextView.text else {
             return
             }
             
-            saveClothe(clotheName: nameText, clotheFileName: "Clothe-\(Date())", clotheTheme: themeText, clotheColor: colorText, clotheMemo: memoText)
+            saveClothe(clotheName: nameText, clotheFileName: "Clothe-\(replaceNowDate)", clotheTheme: themeText, clotheColor: colorText, clotheMemo: memoText)
             
         }
         
