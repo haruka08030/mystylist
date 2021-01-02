@@ -14,6 +14,8 @@ class ClosetViewController: UIViewController, UICollectionViewDataSource, UIColl
 
 
     let realm = RealmService.shared.realm
+    
+    var imageData = UIImage()
    
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,7 +45,7 @@ class ClosetViewController: UIViewController, UICollectionViewDataSource, UIColl
         let documentsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!;
         let fileURL = documentsUrl.appendingPathComponent(fileName)
         do {
-            let imageData = try Data(contentsOf: fileURL)
+            imageData = try Data(contentsOf: fileURL)
             return UIImage(data: imageData)
         } catch {}
         return nil
