@@ -39,12 +39,13 @@ class AddClotheViewController: UIViewController, UITextFieldDelegate, UITextView
         
     }
     
-    //キーボード下げることについて
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
+    
+    //キーボード下げることについて
     //Notification発行
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -65,7 +66,7 @@ class AddClotheViewController: UIViewController, UITextFieldDelegate, UITextView
     // キーボードが表示時に画面をずらす。
     @objc func keyboardWillShow(_ notification: Notification?) {
         guard let rect = (notification?.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue,
-            let duration = notification?.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval else { return }
+              let duration = notification?.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval else { return }
         UIView.animate(withDuration: duration) {
             let transform = CGAffineTransform(translationX: 0, y: -(rect.size.height))
             self.view.transform = transform
@@ -142,8 +143,12 @@ class AddClotheViewController: UIViewController, UITextFieldDelegate, UITextView
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         //ここ
         let image = info[.originalImage] as! UIImage
+        
+        // 画像サイズ軽量化（30%カット）    参考：https://qiita.com/Tsh-43879562/items/4883c433bb7297019a1f
+        let resizedImage = image.resized(withPercentage: 0.7)
+        
         ImageView.image = image
-        clotheImage = image
+        clotheImage = resizedImage
         self.dismiss(animated: true)
     }
     
@@ -155,8 +160,6 @@ class AddClotheViewController: UIViewController, UITextFieldDelegate, UITextView
         themeTextFieldString = clotheThemeTextField.text!
         colorTextFieldString = clotheColorTextField.text!
         memoTextViewString = clotheMemoTextView.text!
-        
-        
         
         //名前が入ってない場合アラートを表示する
         if clotheNameTextField.text == "" {
@@ -173,19 +176,19 @@ class AddClotheViewController: UIViewController, UITextFieldDelegate, UITextView
             present(alertController, animated: true, completion: nil)
             
             
-            
         }else if clotheImage == nil {
-                
-                let alertController = UIAlertController(title: "エラー",
-                                                        message: "画像が未入力です",
-                                                        preferredStyle: .alert)
-                let okAction = UIAlertAction(title: "OK",
-                                             style: .default,
-                                             handler: nil)
-                
-                alertController.addAction(okAction)
-                present(alertController, animated: true, completion: nil)
-                
+            
+            let alertController = UIAlertController(title: "エラー",
+                                                    message: "画像が未入力です",
+                                                    preferredStyle: .alert)
+            
+            let okAction = UIAlertAction(title: "OK",
+                                         style: .default,
+                                         handler: nil)
+            
+            alertController.addAction(okAction)
+            present(alertController, animated: true, completion: nil)
+            
         }else{
             // 日付をフォーマット
             dateFormatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "yyyy/MM/dd HH-mm-ss", options: 0, locale: Locale(identifier: "ja_jp"))
@@ -193,9 +196,9 @@ class AddClotheViewController: UIViewController, UITextFieldDelegate, UITextView
             // 日付をStringに変換
             nowDate = dateFormatter.string(from: date)
             
-            // 「/」「 」「:」を全て「-」に置き換える
+            // 「/」「 」「:」を全て「」に置き換える（削除）
             var replaceNowDate: String {
-                let dictionary = ["/": "-", " ": "-", ":": "-"]
+                let dictionary = ["/": "", " ": "", ":": ""]
                 return dictionary.reduce(nowDate,  { $0.replacingOccurrences(of: $1.key, with: $1.value) })
             }
             print(replaceNowDate)
@@ -204,45 +207,61 @@ class AddClotheViewController: UIViewController, UITextFieldDelegate, UITextView
             saveImageInDocumentDirectory(image: clotheImage!, fileName: "Clothe-\(replaceNowDate)")
             
             guard let nameText = clotheNameTextField.text else {
-            return
+                return
             }
             guard let themeText = clotheThemeTextField.text else {
-            return
+                return
             }
             guard let colorText = clotheColorTextField.text else {
-            return
+                return
             }
             guard let memoText = clotheMemoTextView.text else {
-            return
+                return
             }
             
             saveClothe(clotheName: nameText, clotheFileName: "Clothe-\(replaceNowDate)", clotheTheme: themeText, clotheColor: colorText, clotheMemo: memoText)
             
         }
         
-        self.navigationController?.popViewController(animated: true)
+        self.dismiss(animated: true, completion: nil)
         
-
     }
-
+    
+    @IBAction func dismissTapped(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    
+    func saveImageInDocumentDirectory(image: UIImage, fileName: String){
+        // pngとして保存
+        let pndImageData = image.pngData()
+        // DocumentディレクトリのfileURLを取得
+        let documentsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        
+        let fileURL = documentsUrl.appendingPathComponent(fileName)
+        do {
+            try pndImageData!.write(to: fileURL)
+            print("success")
+        } catch {
+            print("error")
+            return
+        }
+    }
+    
+    func saveClothe(clotheName: String, clotheFileName: String, clotheTheme: String, clotheColor: String, clotheMemo: String){
+        let clothe = Clothe(clotheColor: clotheColor, clotheName: clotheName, clotheFileName: clotheFileName, clotheTheme: clotheTheme, clotheMemo: clotheMemo)
+        RealmService.shared.create(clothe)
+        
+    }
 }
 
-func saveImageInDocumentDirectory(image: UIImage, fileName: String){
-    //DocumentディレクトリのfileURLを取得
-    let documentsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!;
-    //
-    let fileURL = documentsUrl.appendingPathComponent(fileName)
-    
-    //UIImageをNSDataに変換
-    if let imageData = image.pngData() {
-        //画像データを一時ファイルとして保存
-        try? imageData.write(to: fileURL, options: .atomic)
+extension UIImage {
+    // データサイズを変更する（軽量化）
+    func resized(withPercentage percentage: CGFloat) -> UIImage? {
+        let canvas = CGSize(width: size.width * percentage, height: size.height * percentage)
+        return UIGraphicsImageRenderer(size: canvas, format: imageRendererFormat).image {
+            _ in draw(in: CGRect(origin: .zero, size: canvas))
+        }
     }
-}
-
-func saveClothe(clotheName: String, clotheFileName: String, clotheTheme: String, clotheColor: String, clotheMemo: String){
-    let clothe = Clothe(clotheColor: clotheColor, clotheName: clotheName, clotheFileName: clotheFileName, clotheTheme: clotheTheme, clotheMemo: clotheMemo)
-    RealmService.shared.create(clothe)
-    
 }
 
