@@ -28,6 +28,7 @@ class ClosetViewController: UIViewController, UICollectionViewDataSource, UIColl
         searchBar.barTintColor = #colorLiteral(red: 0.5333333333, green: 0.5333333333, blue: 1, alpha: 1)
         
         collectionView.dataSource = self
+        
         // collectionViewを動かしたらキーボードも閉じる
         collectionView.keyboardDismissMode = .onDrag
         collectionView.delegate = self

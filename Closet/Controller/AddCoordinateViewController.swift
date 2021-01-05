@@ -31,6 +31,7 @@ class AddCoordinateViewController: UIViewController, UITextViewDelegate, UITextF
         memotextView2.delegate = self
         
         //選択した写真の枠線
+        //pod "IBAnimatiible"を使用すれば省略化
         self.image1.layer.borderColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
         self.image1.layer.borderWidth = 1.0
         self.image2.layer.borderColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)

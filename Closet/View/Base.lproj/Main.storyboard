@@ -172,7 +172,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GlU-D2-aDg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1113" y="-577"/>
+            <point key="canvasLocation" x="1193" y="106"/>
         </scene>
         <!--服を追加-->
         <scene sceneID="L9H-iI-9ZC">
@@ -338,7 +338,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7CX-Xz-m84" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6860" y="-1286.4532019704434"/>
+            <point key="canvasLocation" x="5798" y="-1286"/>
         </scene>
         <!--Add Coordinate View Controller-->
         <scene sceneID="p0g-ii-ljg">

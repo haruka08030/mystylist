@@ -140,12 +140,12 @@ class AddClotheViewController: UIViewController, UITextFieldDelegate, UITextView
         }
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    func imagePickerController(_picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         //ここ
         let image = info[.originalImage] as! UIImage
         
-        // 画像サイズ軽量化（30%カット）    参考：https://qiita.com/Tsh-43879562/items/4883c433bb7297019a1f
-        let resizedImage = image.resized(withPercentage: 0.7)
+        // 画像サイズ軽量化（50%カット）    参考：https://qiita.com/Tsh-43879562/items/4883c433bb7297019a1f
+        let resizedImage = image.resized(withPercentage: 0.5)
         
         ImageView.image = image
         clotheImage = resizedImage
