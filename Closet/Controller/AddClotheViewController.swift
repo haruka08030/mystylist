@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AddClotheViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class AddClotheViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIAdaptivePresentationControllerDelegate {
     
     @IBOutlet var clotheColorTextField: UITextField!
     @IBOutlet var clotheThemeTextField: UITextField!
@@ -36,6 +36,18 @@ class AddClotheViewController: UIViewController, UITextFieldDelegate, UITextView
         clotheMemoTextView.delegate = self
         clotheMemoTextView.layer.borderWidth = 1.0
         clotheMemoTextView.layer.borderColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        
+        navigationController?.presentationController?.delegate = self
+        
+        self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.6823529412, green: 0.8549019608, blue: 1, alpha: 1)
+        //            #colorLiteral(red: 0.5333333333, green: 0.5333333333, blue: 1, alpha: 1)
+        // ナビゲーションバーのアイテムの色　（戻る　＜　とか　読み込みゲージとか）
+        self.navigationController?.navigationBar.tintColor = .white
+        // ナビゲーションバーのテキストを変更する
+        self.navigationController?.navigationBar.titleTextAttributes = [
+            // 文字の色
+            .foregroundColor: UIColor.white
+        ]
         
     }
     
@@ -90,7 +102,6 @@ class AddClotheViewController: UIViewController, UITextFieldDelegate, UITextView
         clotheThemeTextField.resignFirstResponder()
         clotheNameTextField.resignFirstResponder()
         clotheMemoTextView.resignFirstResponder()
-        
     }
     
     @IBAction func Alert(_ sender: UIButton){
@@ -104,6 +115,7 @@ class AddClotheViewController: UIViewController, UITextFieldDelegate, UITextView
         let actionCamera = UIAlertAction(title: "カメラ", style: .default){
             action in
             print("カメラボタンがタップされた")
+            self.useCamera()
         }
         
         let actionAlbum = UIAlertAction(title: "アルバム", style: .default){
@@ -140,12 +152,20 @@ class AddClotheViewController: UIViewController, UITextFieldDelegate, UITextView
         }
     }
     
-    func imagePickerController(_picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    func useCamera() {
+        let picker = UIImagePickerController()
+        picker.sourceType = .camera
+        picker.delegate = self
+        // UIImagePickerController カメラを起動する
+        present(picker, animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         //ここ
         let image = info[.originalImage] as! UIImage
         
-        // 画像サイズ軽量化（50%カット）    参考：https://qiita.com/Tsh-43879562/items/4883c433bb7297019a1f
-        let resizedImage = image.resized(withPercentage: 0.5)
+        // 画像サイズ軽量化（30%カット）    参考：https://qiita.com/Tsh-43879562/items/4883c433bb7297019a1f
+        let resizedImage = image.resized(withPercentage: 0.6)
         
         ImageView.image = image
         clotheImage = resizedImage
@@ -223,6 +243,11 @@ class AddClotheViewController: UIViewController, UITextFieldDelegate, UITextView
             
         }
         
+        let tabVC = self.presentingViewController as! UITabBarController
+        let navVC = tabVC.selectedViewController as! UINavigationController
+        let vc = navVC.topViewController as! ClosetViewController
+        vc.reload()
+        
         self.dismiss(animated: true, completion: nil)
         
     }
@@ -251,7 +276,11 @@ class AddClotheViewController: UIViewController, UITextFieldDelegate, UITextView
     func saveClothe(clotheName: String, clotheFileName: String, clotheTheme: String, clotheColor: String, clotheMemo: String){
         let clothe = Clothe(clotheColor: clotheColor, clotheName: clotheName, clotheFileName: clotheFileName, clotheTheme: clotheTheme, clotheMemo: clotheMemo)
         RealmService.shared.create(clothe)
-        
+    }
+    
+    func presentationControllerShouldDismiss(_ presentationController: UIPresentationController) -> Bool {
+        // true: スワイプで閉じる   false: スワイプで閉じない
+        false
     }
 }
 

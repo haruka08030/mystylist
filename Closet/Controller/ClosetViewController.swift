@@ -7,9 +7,9 @@
 
 import UIKit
 
-class ClosetViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UISearchBarDelegate{
+class ClosetViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UISearchBarDelegate, UISearchResultsUpdating{
     
-    @IBOutlet weak var searchBar: UISearchBar!
+    
     
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -21,18 +21,19 @@ class ClosetViewController: UIViewController, UICollectionViewDataSource, UIColl
     
     var getImage = String()
     
+    var searchController: UISearchController!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        searchBar.barTintColor = #colorLiteral(red: 0.5333333333, green: 0.5333333333, blue: 1, alpha: 1)
+        setupNavBar()
         
         collectionView.dataSource = self
+        collectionView.delegate = self
         
         // collectionViewを動かしたらキーボードも閉じる
         collectionView.keyboardDismissMode = .onDrag
-        collectionView.delegate = self
-        searchBar.delegate = self
         
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15)
@@ -42,7 +43,7 @@ class ClosetViewController: UIViewController, UICollectionViewDataSource, UIColl
         // ソート（降順）
         let results = realm.objects(Clothe.self).sorted(byKeyPath: "clotheFileName", ascending: false)
         // ソート（昇順）
-//        let results = realm.objects(Clothe.self).sorted(byKeyPath: "clotheFileName", ascending: true)
+        //        let results = realm.objects(Clothe.self).sorted(byKeyPath: "clotheFileName", ascending: true)
         print(results)
         
         // データの数を取得　参考：https://www.paveway.info/entry/2019/01/13/swift_search
@@ -65,16 +66,57 @@ class ClosetViewController: UIViewController, UICollectionViewDataSource, UIColl
         searchBar.resignFirstResponder()
     }
     
+    func updateSearchResults(for searchController: UISearchController) {
+//        <#code#>
+    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
     
     
-    // 画面再表示（前の画面をdismissしたときに呼ばれる）
+    // 画面再表示
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         reload()
-        collectionView.reloadData()
+    }
+    
+    private func setupNavBar() {
+        
+        self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.6823529412, green: 0.8549019608, blue: 1, alpha: 1)
+//            #colorLiteral(red: 0.5333333333, green: 0.5333333333, blue: 1, alpha: 1)
+        // ナビゲーションバーのアイテムの色　（戻る　＜　とか　読み込みゲージとか）
+        self.navigationController?.navigationBar.tintColor = .white
+        // ナビゲーションバーのテキストを変更する
+        self.navigationController?.navigationBar.titleTextAttributes = [
+            // 文字の色
+            .foregroundColor: UIColor.white
+        ]
+        
+        searchController = UISearchController(searchResultsController: nil)
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        
+        // UISearchControllerをUINavigationItemのsearchControllerプロパティにセットする。
+        navigationItem.searchController = searchController
+        
+        // trueだとスクロールした時にSearchBarを隠す（デフォルトはtrue）
+        // falseだとスクロール位置に関係なく常にSearchBarが表示される
+        navigationItem.hidesSearchBarWhenScrolling = true
+        
+        // タイトルを指定
+        self.navigationItem.title = "全ての服"
+        self.navigationController?.navigationBar.prefersLargeTitles = true
+        self.navigationItem.largeTitleDisplayMode = .always
+        
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithDefaultBackground()
+        appearance.backgroundColor = #colorLiteral(red: 0.6823529412, green: 0.8549019608, blue: 1, alpha: 1)
+//            #colorLiteral(red: 0.5333333333, green: 0.5333333333, blue: 1, alpha: 1)
+        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+        self.navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        self.navigationController?.navigationBar.standardAppearance = appearance
     }
     
     func reload() {
@@ -93,6 +135,7 @@ class ClosetViewController: UIViewController, UICollectionViewDataSource, UIColl
                 fileNameArray.append(results.clotheFileName)
             }
         }
+        collectionView.reloadData()
     }
     
     //セルに写真を表示させる
@@ -138,5 +181,5 @@ class ClosetViewController: UIViewController, UICollectionViewDataSource, UIColl
         return CGSize(width: cellSize, height: cellSize)
     }
     
-    
 }
+

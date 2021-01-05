@@ -3,11 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>ライブラリから取得します。</string>
+	<string>写真をライブラリから取得します。</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>撮影した写真をライブラリに追加します。</string>
 	<key>NSCameraUsageDescription</key>
-	<string>写真を撮影するには「許可」を選択してください。</string>
+	<string>写真を撮影します。</string>
 	<key>LSApplicationCategoryType</key>
 	<string></string>
 	<key>CFBundleDevelopmentRegion</key>
