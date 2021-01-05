@@ -144,7 +144,7 @@
                     <navigationItem key="navigationItem" title="コーディネート一覧" id="zjo-7d-fDY">
                         <barButtonItem key="rightBarButtonItem" title="＋" id="Apj-4g-mk2">
                             <connections>
-                                <segue destination="d1r-ez-Yfa" kind="show" id="QGx-2s-WoT"/>
+                                <segue destination="05J-zK-84A" kind="presentation" modalPresentationStyle="fullScreen" id="NyF-6k-EFV"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -172,7 +172,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GlU-D2-aDg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1193" y="106"/>
+            <point key="canvasLocation" x="1169" y="-960"/>
         </scene>
         <!--服を追加-->
         <scene sceneID="L9H-iI-9ZC">
@@ -185,21 +185,21 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="名前" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fc1-0S-SNo">
                                 <rect key="frame" x="41" y="320" width="80" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                                <fontDescription key="fontDescription" name="HiraginoSans-W3" family="Hiragino Sans" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="系統" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z50-JD-7hS">
                                 <rect key="frame" x="41" y="385" width="80" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                                <fontDescription key="fontDescription" name="HiraginoSans-W3" family="Hiragino Sans" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="メモ" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QCS-SI-elJ">
                                 <rect key="frame" x="40" y="515" width="80" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                <fontDescription key="fontDescription" name="HiraginoSans-W3" family="Hiragino Sans" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -218,7 +218,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="色" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BhB-9B-vOB">
                                 <rect key="frame" x="41" y="450" width="80" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                                <fontDescription key="fontDescription" name="HiraginoSans-W3" family="Hiragino Sans" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -290,55 +290,40 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2BP-xA-QJz">
-                                <rect key="frame" x="0.0" y="768" width="375" height="44"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ifx-dm-wTu">
+                                <rect key="frame" x="0.0" y="88" width="375" height="641"/>
+                            </imageView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="93H-aS-Chc">
+                                <rect key="frame" x="0.0" y="729" width="375" height="49"/>
                                 <items>
-                                    <barButtonItem systemItem="camera" id="5cZ-yt-mcN">
-                                        <connections>
-                                            <action selector="startcamera:" destination="c2U-wu-sgT" id="OWk-Fo-hfV"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="qbB-SW-ygU"/>
-                                    <barButtonItem title="アルバムから" id="uN6-jf-ydw">
-                                        <connections>
-                                            <action selector="showAlbum:" destination="c2U-wu-sgT" id="FDx-BY-JNF"/>
-                                        </connections>
-                                    </barButtonItem>
+                                    <barButtonItem systemItem="camera" id="R8T-hg-vfU"/>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="tQ5-IQ-JIp"/>
+                                    <barButtonItem title="Item" image="photo" catalog="system" id="FA0-94-AB7"/>
                                 </items>
                             </toolbar>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ifx-dm-wTu">
-                                <rect key="frame" x="0.0" y="88" width="375" height="680"/>
-                            </imageView>
-                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="W6z-L3-A20">
-                                <rect key="frame" x="0.0" y="44" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <items>
-                                    <navigationItem title="Title" id="h6u-Ah-DAB">
-                                        <barButtonItem key="rightBarButtonItem" title="決定" id="aqw-5o-SlY"/>
-                                    </navigationItem>
-                                </items>
-                            </navigationBar>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="wPd-6X-yXF"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="2BP-xA-QJz" firstAttribute="leading" secondItem="wPd-6X-yXF" secondAttribute="leading" id="0sY-Q8-A5N"/>
-                            <constraint firstItem="2BP-xA-QJz" firstAttribute="top" secondItem="wPd-6X-yXF" secondAttribute="top" constant="724" id="5lb-LA-psc"/>
-                            <constraint firstItem="Ifx-dm-wTu" firstAttribute="leading" secondItem="2BP-xA-QJz" secondAttribute="leading" id="6f2-zD-buj"/>
-                            <constraint firstItem="Ifx-dm-wTu" firstAttribute="top" secondItem="wzE-ly-bfz" secondAttribute="topMargin" constant="-44" id="MFA-gU-n6F"/>
-                            <constraint firstItem="Ifx-dm-wTu" firstAttribute="bottom" secondItem="2BP-xA-QJz" secondAttribute="bottom" id="ncR-PU-nsC"/>
-                            <constraint firstItem="Ifx-dm-wTu" firstAttribute="centerX" secondItem="wzE-ly-bfz" secondAttribute="centerX" id="nxp-O7-muE"/>
-                            <constraint firstItem="Ifx-dm-wTu" firstAttribute="trailing" secondItem="2BP-xA-QJz" secondAttribute="trailing" id="r5U-LV-jN7"/>
-                            <constraint firstItem="Ifx-dm-wTu" firstAttribute="centerY" secondItem="wzE-ly-bfz" secondAttribute="centerY" id="xha-YK-VS4"/>
+                            <constraint firstItem="Ifx-dm-wTu" firstAttribute="trailing" secondItem="wPd-6X-yXF" secondAttribute="trailing" id="4oe-X9-OMn"/>
+                            <constraint firstItem="Ifx-dm-wTu" firstAttribute="leading" secondItem="wPd-6X-yXF" secondAttribute="leading" id="MXW-8R-fk9"/>
+                            <constraint firstItem="93H-aS-Chc" firstAttribute="leading" secondItem="wPd-6X-yXF" secondAttribute="leading" id="P1N-4s-vmR"/>
+                            <constraint firstItem="93H-aS-Chc" firstAttribute="bottom" secondItem="wPd-6X-yXF" secondAttribute="bottom" id="QoQ-uu-Ds1"/>
+                            <constraint firstItem="Ifx-dm-wTu" firstAttribute="top" secondItem="wPd-6X-yXF" secondAttribute="top" id="Um3-Vo-yvZ"/>
+                            <constraint firstItem="93H-aS-Chc" firstAttribute="trailing" secondItem="wPd-6X-yXF" secondAttribute="trailing" id="l6p-4o-6sg"/>
+                            <constraint firstItem="93H-aS-Chc" firstAttribute="top" secondItem="Ifx-dm-wTu" secondAttribute="bottom" id="vwg-ze-r0h"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="xae-DL-qwa">
+                        <barButtonItem key="rightBarButtonItem" title="決定" id="tga-K7-Zq4"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="cameraView" destination="Ifx-dm-wTu" id="LNl-z6-Jhe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7CX-Xz-m84" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5798" y="-1286"/>
+            <point key="canvasLocation" x="6740" y="-1286.4532019704434"/>
         </scene>
         <!--Add Coordinate View Controller-->
         <scene sceneID="p0g-ii-ljg">
@@ -387,9 +372,9 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="系統" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f1M-K2-bO2">
-                                <rect key="frame" x="40" y="460" width="60" height="35"/>
+                                <rect key="frame" x="40" y="460" width="60" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="30"/>
+                                <fontDescription key="fontDescription" name="HiraginoSans-W3" family="Hiragino Sans" pointSize="30"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -402,7 +387,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="メモ" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="831-EG-tck">
                                 <rect key="frame" x="40" y="517" width="60" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="30"/>
+                                <fontDescription key="fontDescription" name="HiraginoSans-W3" family="Hiragino Sans" pointSize="30"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -418,7 +403,14 @@
                         <viewLayoutGuide key="safeArea" id="Oat-YW-WXL"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" id="h6p-A3-gtg"/>
+                    <navigationItem key="navigationItem" id="h6p-A3-gtg">
+                        <barButtonItem key="leftBarButtonItem" image="multiply" catalog="system" id="9kS-Jt-hFz">
+                            <connections>
+                                <action selector="dismissTapped:" destination="d1r-ez-Yfa" id="oOc-iE-e8E"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="BNO-vU-H26"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="image1" destination="aWV-r4-Sg4" id="uzk-ZK-hwq"/>
                         <outlet property="image2" destination="GzS-5d-HrE" id="jNR-Sh-4kn"/>
@@ -434,7 +426,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FdF-6u-T3z" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3829.5999999999999" y="-577.09359605911334"/>
+            <point key="canvasLocation" x="4772" y="-577.09359605911334"/>
         </scene>
         <!--Custom Navigation View Controller-->
         <scene sceneID="HX8-ZI-BFC">
@@ -485,21 +477,21 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="名前" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="73z-zN-veV">
                                 <rect key="frame" x="32" y="301" width="80" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                                <fontDescription key="fontDescription" name="HiraginoSans-W3" family="Hiragino Sans" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="種類" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bgo-ZW-aGp">
                                 <rect key="frame" x="32" y="378" width="80" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                                <fontDescription key="fontDescription" name="HiraginoSans-W3" family="Hiragino Sans" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="メモ" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="37g-kt-z55">
                                 <rect key="frame" x="31" y="526" width="80" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                <fontDescription key="fontDescription" name="HiraginoSans-W3" family="Hiragino Sans" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -518,7 +510,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="色" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kh5-Yw-z2r">
                                 <rect key="frame" x="32" y="452" width="80" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                                <fontDescription key="fontDescription" name="HiraginoSans-W3" family="Hiragino Sans" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -571,10 +563,47 @@
             </objects>
             <point key="canvasLocation" x="3829.5999999999999" y="-1286.4532019704434"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="rIh-0n-hI8">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="wZW-F3-Phk" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="vsn-H7-NiR">
+                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="c2U-wu-sgT" kind="relationship" relationship="rootViewController" id="Gfg-mg-GiV"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aTD-vL-nfv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5797.6000000000004" y="-1286.4532019704434"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="i0p-3F-YgV">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="05J-zK-84A" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="gb9-mo-Ity">
+                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="d1r-ez-Yfa" kind="relationship" relationship="rootViewController" id="QVd-L4-ldg"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="PQe-BS-tFs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3829.5999999999999" y="-577.09359605911334"/>
+        </scene>
     </scenes>
     <resources>
         <image name="EE7EF6E9-0B23-4F5C-8B38-9AC9487E0091" width="3464" height="3464"/>
         <image name="multiply" catalog="system" width="128" height="111"/>
+        <image name="photo" catalog="system" width="128" height="93"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

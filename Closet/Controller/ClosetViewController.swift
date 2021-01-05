@@ -113,8 +113,8 @@ class ClosetViewController: UIViewController, UICollectionViewDataSource, UIColl
         
         print(fileNameArray[indexPath.row])
         
-        // 選択した写真から次の画面に遷移するコードをここに書く       ヒント：「画面遷移」「値渡し」
-        <#code#>
+        // 選択した写真から次の画面に遷移するコードをここに書く   ヒント：「画面遷移」「値渡し」
+        
         
         collectionView.deselectItem(at: indexPath, animated: true)
     }

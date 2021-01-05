@@ -67,6 +67,10 @@ class AddCoordinateViewController: UIViewController, UITextViewDelegate, UITextF
         configureObserver()
     }
     
+    @IBAction func dismissTapped(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     
     // Notification発行
     func configureObserver() {
