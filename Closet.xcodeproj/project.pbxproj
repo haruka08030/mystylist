@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		07DF5586B813446D0198F8A8 /* Pods_Closet_ClosetUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8028D4F8CCF3D9427B04434 /* Pods_Closet_ClosetUITests.framework */; };
 		0AD785717C1D6FF4FFE05272 /* Pods_ClosetTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2433F53E04CF6F51426E0EE2 /* Pods_ClosetTests.framework */; };
-		4501EC3125A98585002BDDA2 /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4501EC3025A98585002BDDA2 /* PreviewViewController.swift */; };
+		4501EC4A25A9D23E002BDDA2 /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4501EC4925A9D23E002BDDA2 /* PreviewViewController.swift */; };
 		45699EA925A94BBD00073A10 /* LookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45699EA825A94BBD00073A10 /* LookViewController.swift */; };
 		45FBB0D32428ADF500C22885 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45FBB0D22428ADF500C22885 /* Photos.framework */; };
 		561D1CEA23AF154300BE93F7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 561D1CE923AF154300BE93F7 /* AppDelegate.swift */; };
@@ -56,7 +56,7 @@
 		39B2139A711334239A4AD839 /* Pods-Closet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Closet.release.xcconfig"; path = "Target Support Files/Pods-Closet/Pods-Closet.release.xcconfig"; sourceTree = "<group>"; };
 		3BFDB573BD157934CC228B3A /* Pods_Closet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Closet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4501EC0325A950EF002BDDA2 /* realm_results.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = realm_results.md; sourceTree = "<group>"; };
-		4501EC3025A98585002BDDA2 /* PreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
+		4501EC4925A9D23E002BDDA2 /* PreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
 		45699EA825A94BBD00073A10 /* LookViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LookViewController.swift; sourceTree = "<group>"; };
 		45FBB0D22428ADF500C22885 /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
 		561D1CE623AF154300BE93F7 /* Closet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Closet.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -206,7 +206,7 @@
 				56DC087A24BAED7200C67591 /* AddCoordinateViewController.swift */,
 				56DC087C24BC67D100C67591 /* CameraclothViewController.swift */,
 				45699EA825A94BBD00073A10 /* LookViewController.swift */,
-				4501EC3025A98585002BDDA2 /* PreviewViewController.swift */,
+				4501EC4925A9D23E002BDDA2 /* PreviewViewController.swift */,
 				4501EC0325A950EF002BDDA2 /* realm_results.md */,
 			);
 			path = Controller;
@@ -481,7 +481,7 @@
 				56DC087D24BC67D100C67591 /* CameraclothViewController.swift in Sources */,
 				561D1CEA23AF154300BE93F7 /* AppDelegate.swift in Sources */,
 				56DC087B24BAED7200C67591 /* AddCoordinateViewController.swift in Sources */,
-				4501EC3125A98585002BDDA2 /* PreviewViewController.swift in Sources */,
+				4501EC4A25A9D23E002BDDA2 /* PreviewViewController.swift in Sources */,
 				56DC087924BAE22C00C67591 /* AddClotheViewController.swift in Sources */,
 				56778E7E24A8750F00C11664 /* CustomTabBarViewController.swift in Sources */,
 				56DC087324BADBA200C67591 /* Clothe.swift in Sources */,

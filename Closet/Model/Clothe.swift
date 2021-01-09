@@ -18,13 +18,14 @@ import RealmSwift
     dynamic var clotheTheme: String = ""
     dynamic var clotheMemo: String = ""
     
-    convenience init(clotheColor: String, clotheName: String, clotheFileName: String, clotheTheme: String, clotheMemo: String) {
+    convenience init(clotheColor: String, clotheName: String, clotheFileName:   String,
+                     clotheTheme: String, clotheMemo: String) {
         self.init()
-        self.clotheName = clotheName
-        self.clotheColor = clotheColor
-        self.clotheTheme = clotheTheme
-        self.clotheFileName = clotheFileName
-        self.clotheMemo = clotheMemo
+        self.clotheName       = clotheName
+        self.clotheColor      = clotheColor
+        self.clotheTheme      = clotheTheme
+        self.clotheFileName   = clotheFileName
+        self.clotheMemo       = clotheMemo
     }
     
     override static func primaryKey() -> String? {

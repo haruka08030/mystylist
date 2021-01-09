@@ -1,9 +1,9 @@
 //
 //  PreviewViewController.swift
-//  ContextMenusSample
+//  Closet
 //
-//  Created by hirothings on 2019/06/17.
-//  Copyright © 2019 hirothings. All rights reserved.
+//  Created by 繁野怜央 on 2021/01/09.
+//  Copyright © 2021 杉山遥. All rights reserved.
 //
 
 import UIKit
@@ -13,7 +13,6 @@ class PreviewViewController: UIViewController {
     
     init(image: UIImage) {
         self.image = image
-
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -24,7 +23,11 @@ class PreviewViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let imageView = UIImageView(image: image)
+        
+        preferredContentSize = image.size
+        imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFill
         self.view.addSubview(imageView)
         NSLayoutConstraint.activate([
             imageView.leftAnchor.constraint(equalTo: view.leftAnchor),

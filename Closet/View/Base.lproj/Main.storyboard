@@ -558,14 +558,13 @@
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9vx-Yv-8xB">
                                 <rect key="frame" x="110.66666666666669" y="664" width="154" height="50"/>
-                                <color key="backgroundColor" systemColor="systemRedColor"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="154" id="9lC-dW-cKc"/>
                                     <constraint firstAttribute="height" constant="50" id="9yz-M9-YV0"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HiraginoSans-W6" family="Hiragino Sans" pointSize="16"/>
                                 <state key="normal" title="削除">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="titleColor" systemColor="systemRedColor"/>
                                 </state>
                                 <connections>
                                     <action selector="deleteTapped:" destination="KAS-BJ-drM" eventType="touchUpInside" id="qh1-Ap-MrA"/>

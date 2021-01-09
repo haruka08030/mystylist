@@ -9,8 +9,7 @@ import UIKit
 import RealmSwift
 import SVProgressHUD
 
-class ClosetViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UISearchBarDelegate, UISearchResultsUpdating{
-    
+class ClosetViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UISearchBarDelegate, UISearchResultsUpdating {
     
     
     @IBOutlet weak var collectionView: UICollectionView!
@@ -21,11 +20,19 @@ class ClosetViewController: UIViewController, UICollectionViewDataSource, UIColl
     
     var fileNameArray = [String]()
     
+    var searchResultsfileNameArray = [String]()
+    
     var getImage = String()
     
-    var searchController: UISearchController!
+    var searchController = UISearchController()
     
     var passDocName = String()
+    
+    var searchText = String()
+    
+    var clotheItems: Results<Clothe>?
+    
+    var searchResults = [String]()
     
     
     override func viewDidLoad() {
@@ -42,6 +49,9 @@ class ClosetViewController: UIViewController, UICollectionViewDataSource, UIColl
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
         collectionView.collectionViewLayout = layout
+        
+        searchController = UISearchController(searchResultsController: nil)
+        searchController.searchResultsUpdater = self
         
         // ---- realmからデータを取ってくる ----
         // ソート（降順）
@@ -65,6 +75,11 @@ class ClosetViewController: UIViewController, UICollectionViewDataSource, UIColl
         
     }
     
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
     // UISearchBarのキーボードを閉じる　参考：https://blog.masterka.net/archives/2109
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
@@ -72,7 +87,7 @@ class ClosetViewController: UIViewController, UICollectionViewDataSource, UIColl
     
     // 検索用
     func updateSearchResults(for searchController: UISearchController) {
-//        <#code#>
+        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -147,14 +162,16 @@ class ClosetViewController: UIViewController, UICollectionViewDataSource, UIColl
     //セルに写真を表示させる
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as? ClosetCollectionViewCell
-        getImage = fileNameArray[indexPath.row]
-        cell?.clotheImageView.image = loadImageFromDocumentDirectory(fileName: getImage)
+        
+            getImage = fileNameArray[indexPath.row]
+            cell?.clotheImageView.image = loadImageFromDocumentDirectory(fileName: getImage)
+        
         return cell!
     }
     
     // セルの個数
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return fileNameArray.count
+            return fileNameArray.count
     }
     
     // セルを選択
@@ -191,7 +208,7 @@ class ClosetViewController: UIViewController, UICollectionViewDataSource, UIColl
     }
     
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt
-        indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+                            indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         
         getImage = fileNameArray[indexPath.row]
         
@@ -200,36 +217,47 @@ class ClosetViewController: UIViewController, UICollectionViewDataSource, UIColl
         }
         
         let actionProvider: ([UIMenuElement]) -> UIMenu? = { _ in
-            let share = UIAction(title: "共有", image: UIImage(systemName: "square.and.arrow.up"), identifier: UIAction.Identifier(rawValue: "share")) { _ in
+            
+            let save = UIAction(title: "写真を保存", image: UIImage(systemName: "square.and.arrow.down"),
+                                identifier: UIAction.Identifier(rawValue: "save")) { _ in
+                // some action
+                UIImageWriteToSavedPhotosAlbum(self.loadImageFromDocumentDirectory(fileName: self.getImage)!, self, nil, nil)
+                print("save")
+            }
+            
+            let share = UIAction(title: "共有", image: UIImage(systemName: "square.and.arrow.up"),
+                                 identifier: UIAction.Identifier(rawValue: "share")) { _ in
                 // some action
                 print("shere")
             }
             
-//            let delete = UIAction(title: "削除", image: UIImage(systemName: "trash"), identifier: UIAction.Identifier(rawValue: "delete")) { _ in
-//                // some action
-//                let alert = UIAlertController(title: "削除しますか？", message: "削除すると元に戻せません。", preferredStyle: .alert)
-//                alert.addAction(UIAlertAction(title: "削除", style: .destructive) { _ in
-//
-//                    // アラート「削除」をタップした時の動作
-//                    let realm = try! Realm()
-//                    // 書き込みトランザクション開始
-//                    try! realm.write {
-//                        let results = realm.objects(Clothe.self).filter("clotheFileName == '\(self.getImage)'")
-//
-//                        realm.delete(results)
-//                        print("delete: success")
-//                    }
-//
-//                    collectionView.reloadData()
-//
-//                })
-//                alert.addAction(UIAlertAction(title: "キャンセル", style: .cancel, handler: nil))
-//                self.present(alert, animated: true)
-//
-//            }
-//            delete.attributes = [.destructive]
+            // 今後追加可能
             
-            return UIMenu(title: "", image: nil, identifier: nil, children: [share])
+            //            let delete = UIAction(title: "削除", image: UIImage(systemName: "trash"), identifier: UIAction.Identifier(rawValue: "delete")) { _ in
+            //                // some action
+            //                let alert = UIAlertController(title: "削除しますか？", message: "削除すると元に戻せません。", preferredStyle: .alert)
+            //                alert.addAction(UIAlertAction(title: "削除", style: .destructive) { _ in
+            //
+            //                    // アラート「削除」をタップした時の動作
+            //                    let realm = try! Realm()
+            //                    // 書き込みトランザクション開始
+            //                    try! realm.write {
+            //                        let results = realm.objects(Clothe.self).filter("clotheFileName == '\(self.getImage)'")
+            //
+            //                        realm.delete(results)
+            //                        print("delete: success")
+            //                    }
+            //
+            //                    collectionView.reloadData()
+            //
+            //                })
+            //                alert.addAction(UIAlertAction(title: "キャンセル", style: .cancel, handler: nil))
+            //                self.present(alert, animated: true)
+            //
+            //            }
+            //            delete.attributes = [.destructive]
+            
+            return UIMenu(title: "", image: nil, identifier: nil, children: [save, share])
         }
         
         return UIContextMenuConfiguration(identifier: nil,

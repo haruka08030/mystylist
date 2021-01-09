@@ -211,7 +211,7 @@ class AddClotheViewController: UIViewController, UITextFieldDelegate, UITextView
             present(alertController, animated: true, completion: nil)
             
         }else{
-            imageName = "Clothe-\(UUID().uuidString)"
+            imageName = "Clothe-\(nowTime())"
             
             saveImageInDocumentDirectory(image: clotheImage!, fileName: imageName)
             
@@ -265,6 +265,22 @@ class AddClotheViewController: UIViewController, UITextFieldDelegate, UITextView
     func saveClothe(clotheName: String, clotheFileName: String, clotheTheme: String, clotheColor: String, clotheMemo: String){
         let clothe = Clothe(clotheColor: clotheColor, clotheName: clotheName, clotheFileName: clotheFileName, clotheTheme: clotheTheme, clotheMemo: clotheMemo)
         RealmService.shared.create(clothe)
+    }
+    
+    func nowTime() -> String {
+        // 日付をフォーマット
+        dateFormatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "yyyy/MM/dd HH-mm-ss", options: 0, locale: Locale(identifier: "ja_jp"))
+        
+        // 日付をStringに変換
+        nowDate = dateFormatter.string(from: date)
+        
+        // 「/」「 」「:」を全て「」に置き換える（削除）
+        var replaceNowDate: String {
+            let dictionary = ["/": "", " ": "", ":": ""]
+            return dictionary.reduce(nowDate,  { $0.replacingOccurrences(of: $1.key, with: $1.value) })
+        }
+        print(replaceNowDate)
+        return replaceNowDate
     }
     
     func presentationControllerShouldDismiss(_ presentationController: UIPresentationController) -> Bool {

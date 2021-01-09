@@ -95,7 +95,6 @@ class LookViewController: UIViewController, UIAdaptivePresentationControllerDele
         self.present(alert, animated: true)
     }
     
-    
     func reload() {
         print("reload")
         ImageView.image = passImage
