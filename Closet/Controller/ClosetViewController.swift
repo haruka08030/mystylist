@@ -6,6 +6,8 @@
 //  Copyright © 2020 杉山遥. All rights reserved.
 
 import UIKit
+import RealmSwift
+import SVProgressHUD
 
 class ClosetViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UISearchBarDelegate, UISearchResultsUpdating{
     
@@ -23,6 +25,8 @@ class ClosetViewController: UIViewController, UICollectionViewDataSource, UIColl
     
     var searchController: UISearchController!
     
+    var passDocName = String()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,7 +40,7 @@ class ClosetViewController: UIViewController, UICollectionViewDataSource, UIColl
         collectionView.keyboardDismissMode = .onDrag
         
         let layout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15)
+        layout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
         collectionView.collectionViewLayout = layout
         
         // ---- realmからデータを取ってくる ----
@@ -66,6 +70,7 @@ class ClosetViewController: UIViewController, UICollectionViewDataSource, UIColl
         searchBar.resignFirstResponder()
     }
     
+    // 検索用
     func updateSearchResults(for searchController: UISearchController) {
 //        <#code#>
     }
@@ -84,8 +89,7 @@ class ClosetViewController: UIViewController, UICollectionViewDataSource, UIColl
     private func setupNavBar() {
         
         self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.6823529412, green: 0.8549019608, blue: 1, alpha: 1)
-//            #colorLiteral(red: 0.5333333333, green: 0.5333333333, blue: 1, alpha: 1)
-        // ナビゲーションバーのアイテムの色　（戻る　＜　とか　読み込みゲージとか）
+        // ナビゲーションバーのアイテムの色
         self.navigationController?.navigationBar.tintColor = .white
         // ナビゲーションバーのテキストを変更する
         self.navigationController?.navigationBar.titleTextAttributes = [
@@ -97,11 +101,10 @@ class ClosetViewController: UIViewController, UICollectionViewDataSource, UIColl
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         
-        // UISearchControllerをUINavigationItemのsearchControllerプロパティにセットする。
+        // UISearchControllerをUINavigationItemのsearchControllerプロパティにセット
         navigationItem.searchController = searchController
         
-        // trueだとスクロールした時にSearchBarを隠す（デフォルトはtrue）
-        // falseだとスクロール位置に関係なく常にSearchBarが表示される
+        // true：スクロールした時にSearchBarを隠す   false：スクロール位置に関係なく常にSearchBarが表示される
         navigationItem.hidesSearchBarWhenScrolling = true
         
         // タイトルを指定
@@ -112,15 +115,17 @@ class ClosetViewController: UIViewController, UICollectionViewDataSource, UIColl
         let appearance = UINavigationBarAppearance()
         appearance.configureWithDefaultBackground()
         appearance.backgroundColor = #colorLiteral(red: 0.6823529412, green: 0.8549019608, blue: 1, alpha: 1)
-//            #colorLiteral(red: 0.5333333333, green: 0.5333333333, blue: 1, alpha: 1)
         appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
         appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
         self.navigationController?.navigationBar.scrollEdgeAppearance = appearance
         self.navigationController?.navigationBar.standardAppearance = appearance
     }
     
+    // 次の画面の画面を閉じたときに、再読み込みする
     func reload() {
         print("reload")
+        SVProgressHUD.show()
+        
         fileNameArray.removeAll()
         
         let results = realm.objects(Clothe.self).sorted(byKeyPath: "clotheFileName", ascending: false)
@@ -136,6 +141,7 @@ class ClosetViewController: UIViewController, UICollectionViewDataSource, UIColl
             }
         }
         collectionView.reloadData()
+        SVProgressHUD.dismiss()
     }
     
     //セルに写真を表示させる
@@ -156,9 +162,12 @@ class ClosetViewController: UIViewController, UICollectionViewDataSource, UIColl
         
         print(fileNameArray[indexPath.row])
         
-        // 選択した写真から次の画面に遷移するコードをここに書く   ヒント：「画面遷移」「値渡し」
+        passDocName = fileNameArray[indexPath.row]
         
+        // 選択した写真から次の画面に遷移するコード（値渡しを行う）
+        performSegue(withIdentifier: "toLook", sender: nil)
         
+        // コレクションビューの選択を解除する
         collectionView.deselectItem(at: indexPath, animated: true)
     }
     
@@ -176,9 +185,65 @@ class ClosetViewController: UIViewController, UICollectionViewDataSource, UIColl
     
     //セルの大きさ
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let horizontalSpace : CGFloat = 20
+        let horizontalSpace : CGFloat = 10
         let cellSize : CGFloat = self.view.bounds.width / 3 - horizontalSpace
         return CGSize(width: cellSize, height: cellSize)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt
+        indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        
+        getImage = fileNameArray[indexPath.row]
+        
+        let previewProvider: () -> PreviewViewController? = { [unowned self] in
+            return PreviewViewController(image: loadImageFromDocumentDirectory(fileName: getImage)!)
+        }
+        
+        let actionProvider: ([UIMenuElement]) -> UIMenu? = { _ in
+            let share = UIAction(title: "共有", image: UIImage(systemName: "square.and.arrow.up"), identifier: UIAction.Identifier(rawValue: "share")) { _ in
+                // some action
+                print("shere")
+            }
+            
+//            let delete = UIAction(title: "削除", image: UIImage(systemName: "trash"), identifier: UIAction.Identifier(rawValue: "delete")) { _ in
+//                // some action
+//                let alert = UIAlertController(title: "削除しますか？", message: "削除すると元に戻せません。", preferredStyle: .alert)
+//                alert.addAction(UIAlertAction(title: "削除", style: .destructive) { _ in
+//
+//                    // アラート「削除」をタップした時の動作
+//                    let realm = try! Realm()
+//                    // 書き込みトランザクション開始
+//                    try! realm.write {
+//                        let results = realm.objects(Clothe.self).filter("clotheFileName == '\(self.getImage)'")
+//
+//                        realm.delete(results)
+//                        print("delete: success")
+//                    }
+//
+//                    collectionView.reloadData()
+//
+//                })
+//                alert.addAction(UIAlertAction(title: "キャンセル", style: .cancel, handler: nil))
+//                self.present(alert, animated: true)
+//
+//            }
+//            delete.attributes = [.destructive]
+            
+            return UIMenu(title: "", image: nil, identifier: nil, children: [share])
+        }
+        
+        return UIContextMenuConfiguration(identifier: nil,
+                                          previewProvider: previewProvider,
+                                          actionProvider: actionProvider)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue,  sender: Any?) {
+        if segue.identifier == "toLook" {
+            let NavC = segue.destination as! UINavigationController
+            let nextVC = NavC.topViewController as! LookViewController
+            // 渡す値を指定する
+            nextVC.fileId = passDocName
+        }
     }
     
 }

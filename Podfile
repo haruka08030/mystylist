@@ -6,7 +6,9 @@ target 'Closet' do
   use_frameworks!
 
   # Pods for Closet
-  pod 'RealmSwift'
+  pod 'RealmSwift','10.5.0'
+  pod 'ImageSlideshow','1.9.0'
+  pod 'SVProgressHUD', '2.2.5'
   
    target 'ClosetTests' do
     inherit! :search_paths

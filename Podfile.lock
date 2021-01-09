@@ -1,22 +1,32 @@
 PODS:
-  - Realm (5.2.0):
-    - Realm/Headers (= 5.2.0)
-  - Realm/Headers (5.2.0)
-  - RealmSwift (5.2.0):
-    - Realm (= 5.2.0)
+  - ImageSlideshow (1.9.0):
+    - ImageSlideshow/Core (= 1.9.0)
+  - ImageSlideshow/Core (1.9.0)
+  - Realm (10.5.0):
+    - Realm/Headers (= 10.5.0)
+  - Realm/Headers (10.5.0)
+  - RealmSwift (10.5.0):
+    - Realm (= 10.5.0)
+  - SVProgressHUD (2.2.5)
 
 DEPENDENCIES:
-  - RealmSwift
+  - ImageSlideshow (= 1.9.0)
+  - RealmSwift (= 10.5.0)
+  - SVProgressHUD (= 2.2.5)
 
 SPEC REPOS:
   trunk:
+    - ImageSlideshow
     - Realm
     - RealmSwift
+    - SVProgressHUD
 
 SPEC CHECKSUMS:
-  Realm: f749c723e272f08fdf1939af5e61d2bd09b203e8
-  RealmSwift: bf0ab78b52c5bafba8b3ad73be8dfb4c1ea5cf01
+  ImageSlideshow: a90cc3568a325cdf1bd543732a2cfcf6361d0dc1
+  Realm: e1c22c3d83b229afb70ebc10e1771c91e9542d12
+  RealmSwift: 6fc078d9d3fd7e58c71bfdbb694e252462f112a5
+  SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
 
-PODFILE CHECKSUM: f812ba0ca871d9f998b5417237c4d407771718b6
+PODFILE CHECKSUM: c6f907e90386626924a624568a2b3a8b7cdf86c1
 
-COCOAPODS: 1.9.3
+COCOAPODS: 1.10.1

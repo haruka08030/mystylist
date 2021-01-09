@@ -25,6 +25,7 @@ class AddClotheViewController: UIViewController, UITextFieldDelegate, UITextView
     let date = Date()
     let dateFormatter = DateFormatter()
     var nowDate = String()
+    var imageName = String()
     
     
     override func viewDidLoad() {
@@ -164,7 +165,7 @@ class AddClotheViewController: UIViewController, UITextFieldDelegate, UITextView
         //ここ
         let image = info[.originalImage] as! UIImage
         
-        // 画像サイズ軽量化（30%カット）    参考：https://qiita.com/Tsh-43879562/items/4883c433bb7297019a1f
+        // 画像サイズ軽量化（40%カット）    参考：https://qiita.com/Tsh-43879562/items/4883c433bb7297019a1f
         let resizedImage = image.resized(withPercentage: 0.6)
         
         ImageView.image = image
@@ -210,21 +211,9 @@ class AddClotheViewController: UIViewController, UITextFieldDelegate, UITextView
             present(alertController, animated: true, completion: nil)
             
         }else{
-            // 日付をフォーマット
-            dateFormatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "yyyy/MM/dd HH-mm-ss", options: 0, locale: Locale(identifier: "ja_jp"))
+            imageName = "Clothe-\(UUID().uuidString)"
             
-            // 日付をStringに変換
-            nowDate = dateFormatter.string(from: date)
-            
-            // 「/」「 」「:」を全て「」に置き換える（削除）
-            var replaceNowDate: String {
-                let dictionary = ["/": "", " ": "", ":": ""]
-                return dictionary.reduce(nowDate,  { $0.replacingOccurrences(of: $1.key, with: $1.value) })
-            }
-            print(replaceNowDate)
-            
-            
-            saveImageInDocumentDirectory(image: clotheImage!, fileName: "Clothe-\(replaceNowDate)")
+            saveImageInDocumentDirectory(image: clotheImage!, fileName: imageName)
             
             guard let nameText = clotheNameTextField.text else {
                 return
@@ -239,7 +228,7 @@ class AddClotheViewController: UIViewController, UITextFieldDelegate, UITextView
                 return
             }
             
-            saveClothe(clotheName: nameText, clotheFileName: "Clothe-\(replaceNowDate)", clotheTheme: themeText, clotheColor: colorText, clotheMemo: memoText)
+            saveClothe(clotheName: nameText, clotheFileName: imageName, clotheTheme: themeText, clotheColor: colorText, clotheMemo: memoText)
             
         }
         
